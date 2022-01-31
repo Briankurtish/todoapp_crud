@@ -26,10 +26,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    todos.add("Rice 1");
-    todos.add("Item 2");
-    todos.add("Item 3");
-    todos.add("Item 4");
+    todos.add("Nervtek meeting");
+    todos.add("Code Flutter");
+    todos.add("Study Algorithms");
+    todos.add("Cook Food");
   }
 
   @override
@@ -46,9 +46,26 @@ class _MyAppState extends State<MyApp> {
                 return AlertDialog(
                   title: Text("Create A Task"),
                   content: TextField(
-                    onChanged: (String value) {},
+                    onChanged: (String value) {
+                      input = value;
+                    },
                   ),
+                  actions: [
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          todos.add(input);
+                        });
+                      },
+                      child: const Text(
+                        "Add",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.green,
+                    )
+                  ],
                 );
+                Navigator.of(context).pop();
               });
         },
         child: Icon(
@@ -62,8 +79,23 @@ class _MyAppState extends State<MyApp> {
             return Dismissible(
               key: Key(todos[index]),
               child: Card(
+                elevation: 4,
+                margin: EdgeInsets.all(8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
                 child: ListTile(
                   title: Text(todos[index]),
+                  trailing: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        todos.removeAt(index);
+                      });
+                    },
+                  ),
                 ),
               ),
             );
